@@ -1,3 +1,4 @@
 <config>
 	<mod>7</mod>
+	<database>./filedb.sqlite</database>
 </config>
