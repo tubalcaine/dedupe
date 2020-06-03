@@ -54,7 +54,7 @@ my $res = buildDB($dbh);
 ## Tie the file and hash hashes
 
 tie %$file, "Tie::DBI", $dbh, "file", "pathname", { CLOBBER => 3 };
-tie %$hash, "Tie::DBI", $dbh, "hash", "hash", { CLOBBER => 3 };
+tie %$hash, "Tie::DBI", $dbh, "md5", "hash", { CLOBBER => 3 };
 
 find(
 	{
