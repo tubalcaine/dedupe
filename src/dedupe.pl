@@ -54,7 +54,7 @@ my $res = buildDB($dbh);
 ## Tie the file and hash hashes
 
 tie %$file, "Tie::DBI", $dbh, "file", "pathname", { CLOBBER => 3 };
-tie %$hash, "Tie::DBI", $dbh, "file", "pathname", { CLOBBER => 3 };
+tie %$hash, "Tie::DBI", $dbh, "hash", "hash", { CLOBBER => 3 };
 
 find(
 	{
@@ -87,7 +87,7 @@ find(
 				print "File $a_name appears to collide.\n";
 				
 				#Increment the count
-				$hash->{$hexDigest}->{count}++;
+				($hash->{$hexDigest}->{count})++;
 			}
 			
 			# Create or update file
