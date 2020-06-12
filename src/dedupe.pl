@@ -91,7 +91,7 @@ find(
 			}
 			
 			# Create or update file
-			$file->{$a_name} = { hash => $hexDigest };
+			$file->{$a_name} = { hash => $hexDigest, size => (-s $a_name) };
 		}
 	},
 	@ARGV
@@ -104,7 +104,8 @@ sub buildDB {
 
 	my $query = "create table if not exists file " . "(
         pathname varchar(2048) primary key,
-        hash varchar(32)
+        hash varchar(32),
+        size int
     )";
 
 	my $res = $dbh->do($query);
