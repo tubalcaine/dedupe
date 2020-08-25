@@ -7,9 +7,11 @@ use strict;
 use DBI;
 use DBD::SQLite;
 use Digest;
+use Digest::MD5;
 use File::Find;
 use File::Basename;
 use XML::Simple;
+use XML::SAX::Expat;
 use Getopt::Long;
 use Tie::DBI;
 
