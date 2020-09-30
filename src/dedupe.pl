@@ -25,6 +25,9 @@ my $mod = 3;
 # Get config from XML (if present)
 my $config = XMLin();
 
+my @rejectDirs;
+my @acceptDirs;
+
 # Apply command line switches (if present)
 GetOptions(
 	"mod=i"      => \$mod,
@@ -61,6 +64,20 @@ tie %$hash, "Tie::DBI", $dbh, "md5", "hash", { CLOBBER => 3 };
 find(
 	{
 		no_chdir => 1,
+		preprocess => sub {
+			my $dirList = \@_;
+
+			my $a_finm = $_;
+			my $a_dir  = $File::Find::dir;
+			my $a_name = $File::Find::name;
+
+			my $prune = (scalar grep { /^$a_dir$/ } @{$config->{prunelist}->{prune}});
+
+			push @rejectDirs, $a_dir if ($prune);
+			push @acceptDirs, $a_dir unless ($prune);
+
+			return (scalar grep { /^$a_dir$/ } @{$config->{prunelist}->{prune}}) ? @{[]} : @$dirList;
+		},
 		wanted   => sub {
 			my $a_finm = $_;
 			my $a_dir  = $File::Find::dir;

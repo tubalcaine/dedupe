@@ -1,4 +1,9 @@
 <config>
 	<mod>13</mod>
 	<database>./filedb.sqlite</database>
+	<prunelist>
+		<prune>/sys</prune>
+		<prune>/proc</prune>
+		<prune>/dev</prune>
+	</prunelist>
 </config>
